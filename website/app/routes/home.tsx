@@ -2,9 +2,9 @@ import React, { Suspense, lazy, useEffect, useState, type ReactElement } from "r
 import { Typewriter } from "~/components/ui/typewriter";
 import { Button } from "~/components/ui/button"; // Adjust path to your shadcn/ui button
 
-const DMG = new URL("https://poleshift.cloud/poleshift_0.1.9_aarch64.dmg", import.meta.url).href;
-const AppImage = new URL("https://poleshift.cloud/poleshift_0.1.9_amd64.AppImage", import.meta.url).href;
-const NSIS = new URL("https://poleshift.cloud/poleshift_0-1.1.9_x64-setup.exe", import.meta.url).href;
+const DMG = new URL("https://releases.poleshift.cloud/poleshift_0.1.9_aarch64.dmg", import.meta.url).href;
+const AppImage = new URL("https://releases.poleshift.cloud/poleshift_0.1.9_amd64.AppImage", import.meta.url).href;
+const NSIS = new URL("https://releases.poleshift.cloud/poleshift_0-1.1.9_x64-setup.exe", import.meta.url).href;
 
 // 1. Import icons for Windows, Mac, and Linux
 import { FaWindows, FaApple, FaLinux } from "react-icons/fa";
