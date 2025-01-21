@@ -39,7 +39,7 @@ export function Typewriter({ delay, texts, baseText = "", onComplete }: ITypewri
     }, [allAnimationsComplete, onComplete]);
 
     return (
-        <span className="font-mono text-4xl text-center bg-transparent inline-block">
+        <span className="font-mono text-3xl text-center bg-transparent inline-block">
       <motion.span>{displayText}</motion.span>
 
             {/* Only start the repeated text animation once baseText is done */}

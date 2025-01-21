@@ -1,6 +1,10 @@
-import React, { Suspense, lazy, useEffect, useState } from "react";
+import React, { Suspense, lazy, useEffect, useState, type ReactElement } from "react";
 import { Typewriter } from "~/components/ui/typewriter";
 import { Button } from "~/components/ui/button"; // Adjust path to your shadcn/ui button
+
+const DMG = new URL("https://poleshift.cloud/poleshift_0.1.9_aarch64.dmg", import.meta.url).href;
+const AppImage = new URL("https://poleshift.cloud/poleshift_0.1.9_amd64.AppImage", import.meta.url).href;
+const NSIS = new URL("https://poleshift.cloud/poleshift_0-1.1.9_x64-setup.exe", import.meta.url).href;
 
 // 1. Import icons for Windows, Mac, and Linux
 import { FaWindows, FaApple, FaLinux } from "react-icons/fa";
@@ -19,7 +23,7 @@ export function meta() {
     ];
 }
 
-const texts = [" beautiful", " masterful", " intuitive", " your data"];
+const texts = [" elegant", " intuitive", " fun", " your data"];
 
 // Utility to detect user OS
 function getUserPlatform() {
@@ -47,13 +51,13 @@ export default function Home() {
 
     // Define your download platforms
     const platforms = [
-        { id: "windows", label: "Download for Windows", link: "#" },
-        { id: "mac", label: "Download for Mac", link: "#" },
-        { id: "linux", label: "Download for Linux", link: "#" },
+        { id: "windows", label: "Download for Windows", link: NSIS },
+        { id: "mac", label: "Download for Mac", link: DMG },
+        { id: "linux", label: "Download for Linux", link: AppImage },
     ];
 
     // Icons for each platform
-    const platformIcons: Record<string, JSX.Element> = {
+    const platformIcons: Record<string, ReactElement> = {
         windows: <FaWindows />,
         mac: <FaApple />,
         linux: <FaLinux />,
@@ -76,12 +80,17 @@ export default function Home() {
     }
 
     return (
-        <main className="relative h-screen w-screen overflow-hidden bg-background text-foreground">
-            {/* Grid layout with two columns: left for text, right for buttons */}
-            <section className="relative z-10 grid h-screen items-center justify-items-center grid-cols-2">
+        <main className="relative h-screen w-screen overflow-auto bg-background text-foreground">
+            {/*
+        Use a responsive grid to prevent overflow on smaller screens.
+        Adding overflow-hidden here ensures no horizontal scroll occurs.
+      */}
+            <section className="relative z-10 grid h-screen grid-cols-1 md:grid-cols-2 items-center justify-items-center overflow-hidden">
                 {/* Left Column: Text */}
-                <div className="flex flex-col justify-center pb-10">
-                    <p className="font-mono text-4xl font-semibold">Poleshift data is</p>
+                <div className="flex flex-col items-center justify-center w-full max-w-md mx-auto px-4 pb-10">
+                    <p className="font-mono text-3xl font-semibold">
+                        Poleshift data is
+                    </p>
                     <p className="mt-2 text-sm font-semibold text-base-900">
                         <Typewriter texts={texts} delay={0.5} baseText="" />
                     </p>
@@ -99,7 +108,10 @@ export default function Home() {
                                     platformsInOrder[0].id === detectedPlatform ? "scale-125" : ""
                                 }
                             >
-                                <a href={platformsInOrder[0].link} className="flex items-center justify-items-center gap-2">
+                                <a
+                                    href={platformsInOrder[0].link}
+                                    className="flex items-center gap-2"
+                                >
                                     {platformIcons[platformsInOrder[0].id]}
                                     {platformsInOrder[0].label}
                                 </a>
@@ -108,7 +120,12 @@ export default function Home() {
                             {/* 2) Secondary platforms side-by-side, same width */}
                             <div className="flex gap-2">
                                 {platformsInOrder.slice(1).map((p) => (
-                                    <Button key={p.id} variant="default" asChild className="flex-1">
+                                    <Button
+                                        key={p.id}
+                                        variant="default"
+                                        asChild
+                                        className="flex-1"
+                                    >
                                         <a href={p.link} className="flex gap-2">
                                             {platformIcons[p.id]}
                                             {capitalizePlatformId(p.id)}
@@ -121,7 +138,8 @@ export default function Home() {
                 </div>
 
                 {/* Right Column: Globe */}
-                <div className="flex -z-10 items-center">
+                {/* Remove negative z-index and let it simply fill the second column */}
+                <div className="flex items-center justify-center w-full h-full">
                     <Suspense fallback={<p>Loading...</p>}>
                         <GlobeComponent />
                     </Suspense>
